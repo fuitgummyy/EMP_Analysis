@@ -2,7 +2,7 @@ performs a fourier transform on a signal/array, simulates its interaction throug
 
 How to run:
 I use Gnuplot to display the dataset
-Once you have run the code to generate the fourier transform data table, paste the code from 'gnuplot_outofiono.txt' 
+Once you have run the code to generate the fourier transform data table, paste the code from 'gnuplot_outofiono.txt' into Gnuplot
 
 something to note: I have made the FT program to read the datafile where I have stored it locally on my laptop,  making it not universally readable. 
 

@@ -1,0 +1,8 @@
+
+reset
+
+set xlabel "Time (microsec)"
+set title "Out of ionosphere'
+set ylabel "volts/m"
+
+plot 'fft_case_01_satellite.dat' using ($0*0.001):($2) with lines notitle

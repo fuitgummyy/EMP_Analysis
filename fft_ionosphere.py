@@ -62,9 +62,9 @@ left_circular = 8445*STEC/(2*cmath.pi * signal_f_freq) *(1 +  0.5*(17.5 * 0.5)/s
                                      #})
 
     
-df = pd.DataFrame(data = {'real': (right_circular.real),
-                          'imag':(right_circular.imag),
-                         'mag': (t_satellite_mag),
+df = pd.DataFrame(data = {'real': (signal_t_satellite.real),
+                          'imag':(signal_t_satellite.imag),
+                         'mag': (t_satellite_mag)
                           #'complex':(signal_t_satellite.real + signal_t_satellite.imag*0j)
                           })
 

@@ -4,7 +4,6 @@ How to run:
 I use Gnuplot to display the dataset
 Once you have run the code to generate the fourier transform data table, paste the code from 'gnuplot_outofiono.txt' into Gnuplot
 
-something to note: I have made the FT program to read the datafile where I have stored it locally on my laptop,  making it not universally readable. 
 
-
-**Currently working on: fixing the simulated ionosphere and high pass filter, adding simulation for earth's magnetic field.**
+**Update: fixed ionosphere simulation, added a double exponential as signal to be fed in, created simple highpass filter, started simulating earth's magnetic field.**
+**Currently working on: finalizing simulations for left circular, right circular and combined movement due to earth's magnetic field, displaying results of multiple simulations, spectrogram**

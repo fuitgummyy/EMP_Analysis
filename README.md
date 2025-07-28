@@ -1,4 +1,4 @@
-performs a fourier transform on a signal/array, simulates its interaction through the ionosphere. 
+performs a fourier transform on a signal/array, simulates its interaction through the ionosphere and magnetic field. 
 
 How to run:
 

@@ -1,8 +1,19 @@
 
 reset
 
-set xlabel "Time (microsec)"
-set title "Out of ionosphere'
-set ylabel "volts/m"
+set multiplot layout 4, 1 column
 
+set title "No Magnetic Field" offset 0,-1
 plot 'fft_case_01_satellite.dat' using ($0*0.001):($2) with lines notitle
+set title "Right Circular" offset 0,-1
+plot 'fft_case_01_satellite.dat' using ($0*0.001):($4) with lines notitle
+set title "Left Circular" offset 0,-1
+plot 'fft_case_01_satellite.dat' using ($0*0.001):($6) with lines notitle
+set xlabel "Time (microsec)"
+set title "Right + Left" offset 0,-1
+plot 'fft_case_01_satellite.dat' using ($0*0.001):($8) with lines notitle
+unset multiplot
+
+
+
+

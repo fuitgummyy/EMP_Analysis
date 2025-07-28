@@ -8,7 +8,7 @@ I use Gnuplot to display the dataset
 
 2: Open Gnuplot in terminal
 
-3: Paste the commands from 'gnuplot_outofiono.txt' into Gnuplot.
+3: Paste the commands from 'gnuplot_outofiono.txt' into Gnuplot OR download 'gnuplot_outofiono.txt' and use the command *load "gnuplot_outofiono.txt"* in the gnuplot terminal to execute.
 
 
 

@@ -12,5 +12,3 @@ I use Gnuplot to display the dataset
 
 
 
-
-**Currently working on: finalizing simulations for left circular, right circular and combined movement due to earth's magnetic field, displaying results of multiple simulations, spectrogram**

@@ -29,12 +29,12 @@ signal_f = np.fft.fft(signal_t)
 n = signal_f.size
 time_interval = 0.001 #time in microseconds
 signal_f_freq = np.fft.fftfreq(n, d=time_interval)
-STEC = 10 #Slant TEC (total electron content) 
+STEC = 0 #Slant TEC (total electron content) 
    
 
 #highpass
-signal_f[:7500] = 0
-signal_f[-7500:] = 0
+signal_f[:10000] = 0
+signal_f[-10000:] = 0
 signal_f_mag= np.abs(signal_f)
 
 
@@ -48,9 +48,9 @@ for freq in signal_f_freq:
         left_circular_phase.append(freq)
         
     else:
-        no_mag_phase.append(-8445*STEC/(2*cmath.pi * freq))
-        right_circular_phase.append((-8445*STEC)/((freq) *(1 - 0.5*(17.5 * 0.5))/ freq))
-        left_circular_phase.append((-8445*STEC)/((freq) *(1 +  0.5*(17.5 * 0.5))/ freq))
+        no_mag_phase.append((-8445*STEC)/freq)
+        right_circular_phase.append((-8445*STEC)/(freq *(1 - (0.5*17.5 * 0.125)/ freq)))
+        left_circular_phase.append((-8445*STEC)/(freq * (1 +  (0.5*17.5 * 0.125)/ freq)))
 
 no_mag_phase = np.array(no_mag_phase)
 right_circular_phase = np.array(right_circular_phase)
@@ -67,9 +67,7 @@ def enforce_symmetry (input_signal):
 def phaseshift(phase):
     ionosphere_phase = np.exp(-1j * phase)
     out_of_ionosphere = signal_f * (ionosphere_phase)
-    #signal_t_satellite = np.fft.ifft(iono_symmetry)
-    #t_satellite_mag = np.abs(signal_t_satellite)
-    iono_mag =  np.abs(out_of_ionosphere)
+    #iono_mag =  np.abs(out_of_ionosphere)
     return out_of_ionosphere
 
 
@@ -99,5 +97,3 @@ df = pd.DataFrame(data = {'no_mag_real':(no_mag.real),
                           })
 
 df.to_csv(path_or_buf="fft_case_01_satellite.dat", sep=" ", index = True, header=[ 'no_mag_real','no_mag_imag',  'right_real', 'right_imag', 'left_real','left_imag', 'both_real','both_imag' ], float_format='%.6e')
-
-

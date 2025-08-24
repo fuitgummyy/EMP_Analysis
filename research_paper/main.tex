@@ -23,8 +23,7 @@
 %Author names and affiliations
 \author[]{Atlas Hussey}
 
-
-%Abstract, keywords, math subject classification
+%Abstract
 \begin{abstract}
 An electromagnetic pulse can be propagated through a couple of sources, namely lightning and nuclear blasts. Satellites such as the FORTE and GPS satellites can detect these pulses as they pass through Earth's ionosphere. However, the ionosphere distorts the signal produced by the electromagnetic pulse. Using Fourier transforms, I am able to model the distortion of the electromagnetic pulse caused by the ionosphere in order to gain a better understanding of it.  
 
@@ -43,9 +42,12 @@ other sources of radio waves can be impulsive, such as nuclear blasts.
 
 \noindent Lightning strikes can also produce a similar pulse due to the rapid discharge of electrons during a strike producing $10^6$ volts per meter. Lightning is also much more frequent, striking the earth around 1000 times per second. However, lightning is only capable of producing a signal similar to a nuclear blast under certain conditions. Satellites such as the FORTE satellite and GPS satellites are built with an EMP detector to analyze these signals, initially to monitor compliance with nuclear test ban treaties, but now to study lightning from space. In this project, I intend to take a simplified approach in modeling how Earth's ionosphere and magnetic field affect the frequency signature of an electromagnetic pulse. 
 
+%------------------------------------------------------------------------------------
+
 \section{Background}
 \subsection{Earth's Ionosphere}
- \noindent As an EMP passes through the ionosphere, it encounters a varying amount of free electrons. These electrons absorb some of the energy of frequencies in the signal, distorting it. This distortion causes higher frequencies to be received tens of microseconds later than the original pulse, and the lower frequencies show up hundreds of microseconds later. The lowest frequencies are unable to penetrate Earth's ionosphere entirely and instead are reflected back down to Earth's surface.
+
+\noindent As an EMP passes through the ionosphere, it encounters a varying amount of free electrons. These electrons absorb some of the energy of frequencies in the signal, distorting it. This distortion causes higher frequencies to be received tens of microseconds later than the original pulse, and the lower frequencies show up hundreds of microseconds later. The lowest frequencies are unable to penetrate Earth's ionosphere entirely and instead are reflected back down to Earth's surface.
 
 \noindent The extent of this delay is dependent on the total electron density of the atmosphere. The total electron density depends on the amount of ionizing solar radiation the ionosphere receives; more radiation in cases such as solar flares or Earth's surface facing the Sun increases the electron density.
 
@@ -53,9 +55,11 @@ other sources of radio waves can be impulsive, such as nuclear blasts.
 
 \noindent Earth's magnetic field also changes how the signal can be read through the ionosphere. At first glance, the initial signal appears to be linear. While that may be true, the signal is also the sum of two polarizations, one that rotates counterclockwise (right-circular), another that rotates clockwise (left-circular). Earth's magnetic field separates the signal into these two "modes" that travel through the atmosphere at different speeds.
 
+%------------------------------------------------------------------------------------
 
 \section{Methods}
 \subsection{Modeling the Initial Signal}
+
 \noindent Whereas a radio signal appears as a sinusoid comprised of one frequency,
 an EMP source contains many frequencies,  and usually has a fast rise and a slower fall in frequency. The rise and fall are both exponential functions, therefore the shape is known as a "double exponential". There are several ways to model double exponentials, but I used this equation:
 
@@ -100,33 +104,41 @@ In the time domain, the frequency is quite low, so it gets buried under numerica
 
 \subsection{Aliasing}
 \noindent Something to be mindful of when performing Fourier Transforms is a process called aliasing. In a signal, all frequencies must be included. However, we can only view a certain window of frequencies, so signals outside of the window of frequencies tend to "wrap around". For example, if we were to take a Fourier Transform of a signal with a high amplitude frequency at 700  MHz, yet we were only able to view frequencies up to 512 MHz, the frequency would show up at both 700(-188 MHz) and 188 MHz due to Hermitian symmetry. 
-\\ Aliasing also occurs in the time domain. This is problematic, especially when the signal goes through the ionosphere and the lowest frequencies take hours to arrive.
+\\ 
+Aliasing also occurs in the time domain. This is problematic, especially when the signal goes through the ionosphere and the lowest frequencies take hours to arrive.
+
     \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{time-aliasing.png}
     \caption{Aliasing in the time domain. The aliased frequencies add amplitude to the existing frequencies. A common indicator of aliasing is when the Nyquist or last frequency of a signal is not at or near zero. }
     \label{fig:time-aliasing}
     \end{figure}
+    
 \\
 \\
 \noindent To prevent aliasing when calculating the shift in frequencies caused by the ionosphere, I used a simple highpass filter. In the interest of time, the highpass filter I used set the amplitude of the lowest 7500 frequencies to zero. Such a simplified highpass filter is not completely accurate as to how the satellite reads the frequencies; the satellite tends to have a more gradual decrease in frequencies it can measure.
 
 \subsection{Phase}
 \noindent Earth's ionosphere affects the phase of the frequencies of an EMP. The phase dictates where and when the frequency will appear in a plot. The phase delay caused by Earth's ionosphere can be expressed as $e^{-i \Delta \theta}$ where $\Delta\theta$ is the change in phase. To calculate the phase delay caused by Earth's ionosphere I used this formula which is a simplified version of the formula used to calculate ionospheric delay.
+
 \begin{center}
     \large$\Delta \theta = \frac{-8445 *STEC}{2\pi f}$
 \end{center}
+
 \noindent The STEC is the slant "total electron content", that is, the electron column density along the path the signal takes, given in units of $10^{16}$ electrons/$m^2$. It is typically between the ranges of 5 and 100.
 \\
 \\
 \noindent Once the phase delay is applied, I then take the inverse Fourier transform of the signal, which, as the name suggests, expresses a function of frequency in the time domain.
 As a signal in the time domain, it should have almost no imaginary power. To calculate the changes Earth's magnetic field make to the signal, I expressed $\Delta \theta$ as this function where it also calculated the cosine of the angle at which the signal entered Earth's ionosphere.
+
 \begin{center}
    \Large $\Delta\theta= \frac{-8445*STEC}{2\pi f (1 \pm \frac{17.5Bcos(\delta)}{f})}$
 \end{center}
 
 \noindent I set the cosine to 0.125 radians. I evaluated the signal twice, one to calculate the right-circular mode (with the - sign) and the other to calculate the left circular (with the + sign).
 Interestingly enough, the equations for the right and left circular are the opposite of one another in the southern hemisphere.
+
+%------------------------------------------------------------------------------------
 
 \section{Results and Discussion}
 
@@ -148,9 +160,16 @@ Interestingly enough, the equations for the right and left circular are the oppo
 The sudden taper in the signal is due to the highpass filter put in place, and resembles how satellites measuring EMPs are built to most sensitively receive a certain bandwidth of frequencies.
 Furthermore, the antennae can be built to receive the right-circular signal, the left-circular signal, or a sum of both, but not all three at once.
 
+%------------------------------------------------------------------------------------
+
 \section{Limitations}
+
 \noindent Unfortunately, the weather data from the FORTE satellite is not yet publicly available, so I did not have access to real data which would have greatly improved the accuracy of my project.
+
+%------------------------------------------------------------------------------------
+
 \section{Moving Forward}
+
 \noindent Electrons also change the refractive index of the ionosphere, which causes the EMP to change angles, similarly to how light bends when passing through a prism. The extent of this refraction depends on the total electron density of the atmosphere, the wave's frequency, and the angle at which it enters the ionosphere. However, this process does not depend on the phase, so I did not model it.  Moving forward, I would like to plot the data as a spectrogram, take into account refraction, and write a program that calculates the location of each lightning strike.
 %-------------------------------------------------------------------------------------------------
 \\
@@ -160,7 +179,7 @@ Furthermore, the antennae can be built to receive the right-circular signal, the
 \cite{edfenimore}
 \medskip
 \printbibliography
-
+%------------------------------------------------------------------------------------
 
 \end{document}
 

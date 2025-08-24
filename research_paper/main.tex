@@ -17,13 +17,11 @@
 
 %------------------------------------------------------------------------------
 
-%Title of the paper
 \title[EMP Modelling]{Modeling Electromagnetic Pulse Interactions with Earth's Ionosphere and Magnetic Field}
-
-%Author names and affiliations
 \author[]{Atlas Hussey}
 
-%Abstract
+%------------------------------------------------------------------------------------
+
 \begin{abstract}
 An electromagnetic pulse can be propagated through a couple of sources, namely lightning and nuclear blasts. Satellites such as the FORTE and GPS satellites can detect these pulses as they pass through Earth's ionosphere. However, the ionosphere distorts the signal produced by the electromagnetic pulse. Using Fourier transforms, I am able to model the distortion of the electromagnetic pulse caused by the ionosphere in order to gain a better understanding of it.  
 
@@ -45,6 +43,7 @@ other sources of radio waves can be impulsive, such as nuclear blasts.
 %------------------------------------------------------------------------------------
 
 \section{Background}
+
 \subsection{Earth's Ionosphere}
 
 \noindent As an EMP passes through the ionosphere, it encounters a varying amount of free electrons. These electrons absorb some of the energy of frequencies in the signal, distorting it. This distortion causes higher frequencies to be received tens of microseconds later than the original pulse, and the lower frequencies show up hundreds of microseconds later. The lowest frequencies are unable to penetrate Earth's ionosphere entirely and instead are reflected back down to Earth's surface.
@@ -58,8 +57,8 @@ other sources of radio waves can be impulsive, such as nuclear blasts.
 %------------------------------------------------------------------------------------
 
 \section{Methods}
-\subsection{Modeling the Initial Signal}
 
+\subsection{Modeling the Initial Signal}
 \noindent Whereas a radio signal appears as a sinusoid comprised of one frequency,
 an EMP source contains many frequencies,  and usually has a fast rise and a slower fall in frequency. The rise and fall are both exponential functions, therefore the shape is known as a "double exponential". There are several ways to model double exponentials, but I used this equation:
 
@@ -81,21 +80,20 @@ The faster the signal rises, the more powerful the frequencies in the electromag
 
 \subsection{Fourier Transforms}
 In order to properly simulate and analyze the changes Earth's ionosphere and magnetic field make to the signal, we must break the signal down into its frequencies. This can be done using a Fourier transform. A Fourier transform takes however many points there are in the signal, usually for the signal at every nanosecond, and multiplies each point by a sinusoid, as a singular frequency appears as one. It then plots the amplitude of each sinusoid into another graph to show how much power each frequency has. The Fourier transform utilizes Euler's formula $e^{i_x} = cos(x) + i*sin(x)$
+to break down the complex sinusoidal signals into their real (cosine) and imaginary (sine) parts.Fourier transforms are quite useful in revealing frequencies as shown in the following figures:
 
-to break down the complex sinusoidal signals into their real (cosine) and imaginary (sine) parts.
-Fourier transforms are quite useful in revealing frequencies as shown in the following figures:
     \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{test_08.png}
-    \caption{Test data}
-    \label{fig:test-08}
-\end{figure}
-    \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{fft_test_08.png}
-    \caption{Fourier transform of the test data that reveals hidden frequencies}
-    \label{fig:fft-test-08}
-\end{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{test_08.png}
+        \caption{Test data}
+        \label{fig:test-08}
+    \end{figure}
+        \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.6\textwidth]{fft_test_08.png}
+        \caption{Fourier transform of the test data that reveals hidden frequencies}
+        \label{fig:fft-test-08}
+    \end{figure}
 
 In the time domain, the frequency is quite low, so it gets buried under numerical noise. However, because the Fourier Transform multiplies the magnitude of the frequency for every time it occurs ($2^{20}$ nanoseconds), the frequency ends up having a lot of power.
 
